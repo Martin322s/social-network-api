@@ -14,7 +14,7 @@ const commentSchema = new mongoose.Schema({
         ref: 'Publication'
     }
 },
-    
+    { timestamps: true }
 );
 
 const Comment = mongoose.model('Comment', commentSchema);
