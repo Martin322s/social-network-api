@@ -44,7 +44,15 @@ const userSchema = new mongoose.Schema({
     },
     about: {
         type: String
-    }
+    },
+    publications: [{
+        type: mongoose.Types.ObjectId,
+        ref: 'Publication'
+    }],
+    comments: [{
+        type: mongoose.Types.ObjectId,
+        ref: 'Comment'
+    }]
 });
 
 const User = mongoose.model('User', userSchema);
