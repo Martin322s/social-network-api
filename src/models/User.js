@@ -21,6 +21,29 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         enum: ['m', 'f']
+    },
+    phone: {
+        type: String,
+    },
+    birthday: {
+        day: {
+            type: Number
+        },
+        month: {
+            type: Number
+        },
+        year: {
+            type: Number
+        }
+    },
+    city: {
+        type: String
+    },
+    country: {
+        type: String
+    },
+    about: {
+        type: String
     }
 });
 
