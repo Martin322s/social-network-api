@@ -25,7 +25,9 @@ const publicationSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: 'Comment'
     }]
-});
+},
+    { timestamps: true }
+);
 
 const Publication = mongoose.model('Publication', publicationSchema);
 
