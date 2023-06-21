@@ -1,8 +1,22 @@
 const User = require('../models/User');
+const { body, validationResult } = require('express-validator');
 const { SALT_ROUNDS } = require('../../config/constants');
 const bcrypt = require('bcrypt');
 
 exports.registerUser = async (userData) => {
+    
+    await Promise.all([
+        body('email').isEmail().withMessage('Invalid email address'),
+        body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
+    ]).catch((error) => {
+        throw new Error(error);
+    });
+
+    const errors = validationResult(userData);
+    if (!errors.isEmpty()) {
+        throw new Error(errors.array().map((error) => error.msg).join(', '));
+    }
+
     const user = await User.findOne({ email: userData.email });
 
     if (user) {
