@@ -4,7 +4,7 @@ const { SALT_ROUNDS } = require('../../config/constants');
 const bcrypt = require('bcrypt');
 
 exports.registerUser = async (userData) => {
-    
+
     await Promise.all([
         body('email').isEmail().withMessage('Invalid email address'),
         body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
@@ -25,6 +25,22 @@ exports.registerUser = async (userData) => {
         const salt = await bcrypt.genSalt(SALT_ROUNDS);
         const password = await bcrypt.hash(userData.password, salt);
         const user = await User.create({ ...userData, password: password });
+        return user;
+    }
+};
+
+exports.loginUser = async ({ email, password }) => {
+    const user = await User.findOne({ email: email });
+
+    if (!user) {
+        return "User not found!";
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+        return "Invalid email or password!";
+    } else {
         return user;
     }
 };
