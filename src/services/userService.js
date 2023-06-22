@@ -64,3 +64,7 @@ exports.generateToken = async (userData) => {
 };
 
 exports.getUserById = async (userId) => await User.findById({ _id: userId }).lean();
+
+exports.updateUserProfile = async (userId, userData) => 
+    await User.findByIdAndUpdate({ _id: userId }, userData);
+
