@@ -68,3 +68,4 @@ exports.getUserById = async (userId) => await User.findById({ _id: userId }).lea
 exports.updateUserProfile = async (userId, userData) => 
     await User.findByIdAndUpdate({ _id: userId }, userData);
 
+exports.deleteUserProfile = async (userId) => await User.findByIdAndDelete({ _id: userId });
