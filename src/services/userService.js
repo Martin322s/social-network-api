@@ -1,6 +1,6 @@
 const User = require('../models/User');
 const { body, validationResult } = require('express-validator');
-const { SALT_ROUNDS } = require('../../config/constants');
+const { SALT_ROUNDS, SECRET } = require('../../config/constants');
 const bcrypt = require('bcrypt');
 
 exports.registerUser = async (userData) => {
@@ -56,4 +56,9 @@ exports.loginUser = async ({ email, password }) => {
     } else {
         return user;
     }
+};
+
+exports.generateToken = async (userData) => {
+    const token = await jwtSign({ _id: userData._id }, SECRET, { expiresIn: '2h' });
+    return token;
 };
