@@ -15,15 +15,20 @@ router.post('/register', cors(), async (req, res) => {
 
     try {
         const result = await userService.registerUser({ firstName, lastName, email, password, gender });
-        
-        if (typeof result !== "string") {
+
+        if (result._id) {
             const token = await userService.generateToken(result);
             res.status(200).json({
                 firstName: result.firstName,
                 lastName: result.lastName,
+                email: result.email,
                 accessToken: token,
                 _id: result._id
             });
+        } else {
+            throw {
+                message: result
+            }
         }
     } catch(err) {
         res.status(400).json(err);

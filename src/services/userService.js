@@ -2,6 +2,9 @@ const User = require('../models/User');
 const { body, validationResult } = require('express-validator');
 const { SALT_ROUNDS, SECRET } = require('../../config/constants');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const { promisify } = require('util');
+const jwtSign = promisify(jwt.sign)
 
 exports.registerUser = async (userData) => {
 
@@ -53,7 +56,7 @@ exports.generateToken = async (userData) => {
 
 exports.getUserById = async (userId) => await User.findById({ _id: userId }).lean();
 
-exports.updateUserProfile = async (userId, userData) => 
+exports.updateUserProfile = async (userId, userData) =>
     await User.findByIdAndUpdate({ _id: userId }, userData);
 
 exports.deleteUserProfile = async (userId) => await User.findByIdAndDelete({ _id: userId });
