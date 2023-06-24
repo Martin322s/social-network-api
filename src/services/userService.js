@@ -5,27 +5,18 @@ const bcrypt = require('bcrypt');
 
 exports.registerUser = async (userData) => {
 
-    await Promise.all([
-        body('email').isEmail().withMessage('Invalid email address'),
-        body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
-    ]).catch((error) => {
-        throw new Error(error);
-    });
-
-    const errors = validationResult(userData);
-    if (!errors.isEmpty()) {
-        throw new Error(errors.array().map((error) => error.msg).join(', '));
-    }
-
     const user = await User.findOne({ email: userData.email });
 
     if (user) {
         return "User with this email already exists!";
     } else {
         const salt = await bcrypt.genSalt(SALT_ROUNDS);
+        console.log(salt);
         const password = await bcrypt.hash(userData.password, salt);
-        const user = await User.create({ ...userData, password: password });
-        return user;
+        console.log(password);
+        const newUser = await User.create({ ...userData, password: password });
+        console.log(newUser);
+        //return newUser;
     }
 };
 
