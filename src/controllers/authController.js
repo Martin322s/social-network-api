@@ -4,7 +4,6 @@ const cors = require('cors');
 
 router.post('/register', cors(), async (req, res) => {
     const { firstName, lastName, email, password, gender } = req.body;
-    console.log({ firstName, lastName, email, password, gender });
 
     if (!firstName || !lastName || !email || !password || !gender) {
         return res.status(400).json({ message: 'All fields are required.' });
@@ -16,9 +15,18 @@ router.post('/register', cors(), async (req, res) => {
 
     try {
         const result = await userService.registerUser({ firstName, lastName, email, password, gender });
-        console.log(result);
+        
+        if (typeof result !== "string") {
+            const token = await userService.generateToken(result);
+            res.status(200).json({
+                firstName: result.firstName,
+                lastName: result.lastName,
+                accessToken: token,
+                _id: result._id
+            });
+        }
     } catch(err) {
-
+        res.status(400).json(err);
     }
 });
 

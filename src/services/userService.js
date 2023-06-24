@@ -11,12 +11,9 @@ exports.registerUser = async (userData) => {
         return "User with this email already exists!";
     } else {
         const salt = await bcrypt.genSalt(SALT_ROUNDS);
-        console.log(salt);
         const password = await bcrypt.hash(userData.password, salt);
-        console.log(password);
         const newUser = await User.create({ ...userData, password: password });
-        console.log(newUser);
-        //return newUser;
+        return newUser;
     }
 };
 
