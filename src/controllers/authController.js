@@ -13,16 +13,13 @@ router.post('/register', cors(), async (req, res) => {
         return res.status(400).json({ message: 'Password should be at least 6 characters long.' });
     }
 
-    if (gender !== "male" || gender !== "female") {
-        return res.status(400).json({ message: "Invalid gender type" });
-    }
-
     try {
         const result = await userService.registerUser({ firstName, lastName, email, password, gender });
 
         if (result._id) {
             const token = await userService.generateToken(result);
 
+            console.log(result, token);
             res.status(200).json({
                 firstName: result.firstName,
                 lastName: result.lastName,
