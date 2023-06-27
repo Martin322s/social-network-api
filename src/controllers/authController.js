@@ -18,8 +18,7 @@ router.post('/register', cors(), async (req, res) => {
 
         if (result._id) {
             const token = await userService.generateToken(result);
-
-            console.log(result, token);
+            
             res.status(200).json({
                 firstName: result.firstName,
                 lastName: result.lastName,
@@ -34,6 +33,20 @@ router.post('/register', cors(), async (req, res) => {
         }
     } catch(err) {
         res.status(400).json(err);
+    }
+});
+
+router.post('/login', (req, res) => {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+        res.status(400).json("All fields are required!");
+    } else {
+        try {
+
+        } catch (err) {
+            
+        }
     }
 });
 
