@@ -18,7 +18,7 @@ router.post('/register', cors(), async (req, res) => {
 
         if (result._id) {
             const token = await userService.generateToken(result);
-            
+
             res.status(200).json({
                 firstName: result.firstName,
                 lastName: result.lastName,
@@ -31,7 +31,7 @@ router.post('/register', cors(), async (req, res) => {
                 message: result
             }
         }
-    } catch(err) {
+    } catch (err) {
         res.status(400).json(err);
     }
 });
@@ -44,7 +44,7 @@ router.post('/login', async (req, res) => {
     } else {
         try {
             const result = await userService.loginUser({ email, password });
-            
+
             if (typeof result === "string") {
                 throw {
                     message: "Invalid data provided!"
@@ -62,6 +62,15 @@ router.post('/login', async (req, res) => {
         } catch (err) {
             res.status(400).json(err);
         }
+    }
+});
+
+router.get('/logout', (req, res) => {
+    if (req.headers['x-authorization']) {
+        res.clearCookie('session');
+        res.json();
+    } else {
+        res.status(401).json('Unauthorized - You don\'t have permissions to do that!');
     }
 });
 
