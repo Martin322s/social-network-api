@@ -36,14 +36,29 @@ router.post('/register', cors(), async (req, res) => {
     }
 });
 
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
         res.status(400).json("All fields are required!");
     } else {
         try {
-
+            const result = await userService.loginUser({ email, password });
+            
+            if (typeof result === "string") {
+                throw {
+                    message: "Invalid data provided!"
+                }
+            } else {
+                const token = await userService.generateToken(result);
+                res.status(200).json({
+                    firstName: result.firstName,
+                    lastName: result.lastName,
+                    email: result.email,
+                    accessToken: token,
+                    _id: result._id
+                });
+            }
         } catch (err) {
             
         }
