@@ -21,19 +21,6 @@ exports.registerUser = async (userData) => {
 };
 
 exports.loginUser = async ({ email, password }) => {
-
-    await Promise.all([
-        body('email').isEmail().withMessage('Invalid email address'),
-        body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
-    ]).catch((error) => {
-        throw new Error(error);
-    });
-
-    const errors = validationResult(userData);
-    if (!errors.isEmpty()) {
-        throw new Error(errors.array().map((error) => error.msg).join(', '));
-    }
-
     const user = await User.findOne({ email: email });
 
     if (!user) {
