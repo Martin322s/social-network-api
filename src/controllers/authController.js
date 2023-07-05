@@ -81,8 +81,12 @@ router.get('/user/:userId', async (req, res) => {
     res.json(user);
 });
 
-router.put('/update/:userId', (req, res) => {
+router.put('/update/:userId', async (req, res) => {
     const userId = req.params.userId;
+    const userData = req.body;
     
+    const edittedUser = await userService.updateUserProfile(userId, userData);
+    res.json(edittedUser);
 });
+
 module.exports = router;
