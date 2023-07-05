@@ -81,4 +81,8 @@ router.get('/user/:userId', async (req, res) => {
     res.json(user);
 });
 
+router.put('/update/:userId', (req, res) => {
+    const userId = req.params.userId;
+    
+});
 module.exports = router;
