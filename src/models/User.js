@@ -25,16 +25,14 @@ const userSchema = new mongoose.Schema({
     phone: {
         type: String,
     },
-    birthday: {
-        day: {
-            type: Number
-        },
-        month: {
-            type: Number
-        },
-        year: {
-            type: Number
-        }
+    day: {
+        type: String
+    },
+    month: {
+        type: String
+    },
+    year: {
+        type: String
     },
     city: {
         type: String

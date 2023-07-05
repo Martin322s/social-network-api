@@ -77,7 +77,6 @@ router.get('/logout', (req, res) => {
 router.get('/user/:userId', async (req, res) => {
     const userId = req.params.userId;
     const user = await userService.getUserById(userId);
-    console.log(user);
     res.json(user);
 });
 
