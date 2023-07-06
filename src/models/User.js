@@ -43,6 +43,10 @@ const userSchema = new mongoose.Schema({
     about: {
         type: String
     },
+    friends: [{
+        type: mongoose.Types.ObjectId,
+        ref: 'User'
+    }],
     publications: [{
         type: mongoose.Types.ObjectId,
         ref: 'Publication'
