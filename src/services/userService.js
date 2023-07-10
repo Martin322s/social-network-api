@@ -48,4 +48,8 @@ exports.updateUserProfile = async (userId, userData) =>
 
 exports.deleteUserProfile = async (userId) => await User.findByIdAndDelete({ _id: userId });
 
-exports.editUserPassword = async (userId, data) => await User.findByIdAndUpdate({ _id: userId }, data);
+exports.editUserPassword = async (userId, newPassword, data) => {
+    const hash = await bcrypt.hash(newPassword, SALT_ROUNDS);
+    const newUser = await User.findByIdAndUpdate({ _id: userId }, { ...data, password: hash });
+    return newUser;
+}

@@ -83,16 +83,17 @@ router.get('/user/:userId', async (req, res) => {
 router.put('/update/:userId', async (req, res) => {
     const userId = req.params.userId;
     const userData = req.body;
-    
+
     const edittedUser = await userService.updateUserProfile(userId, userData);
     res.json(edittedUser);
 });
 
 router.patch('/password/:userId', async (req, res) => {
     const userId = req.params.userId;
-    const { newPassword, oldPassword } = req.body;
+    const { newPassword } = req.body;
     const user = await userService.getUserById(userId);
-    console.log(user);
+    const newUserData = await userService.editUserPassword(userId, newPassword, user);
+    res.status(200).json({ message: 'Password changes successfully!'});
 });
 
 module.exports = router;
