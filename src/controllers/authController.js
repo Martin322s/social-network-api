@@ -88,9 +88,11 @@ router.put('/update/:userId', async (req, res) => {
     res.json(edittedUser);
 });
 
-router.patch('/password/:userId', (req, res) => {
+router.patch('/password/:userId', async (req, res) => {
     const userId = req.params.userId;
     const { newPassword, oldPassword } = req.body;
+    const user = await userService.getUserById(userId);
+    console.log(user);
 });
 
 module.exports = router;

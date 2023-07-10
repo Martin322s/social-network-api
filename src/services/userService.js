@@ -47,3 +47,5 @@ exports.updateUserProfile = async (userId, userData) =>
     await User.findByIdAndUpdate({ _id: userId }, userData);
 
 exports.deleteUserProfile = async (userId) => await User.findByIdAndDelete({ _id: userId });
+
+exports.editUserPassword = async (userId, data) => await User.findByIdAndUpdate({ _id: userId }, data);
