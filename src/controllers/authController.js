@@ -98,9 +98,10 @@ router.patch('/password/:userId', async (req, res) => {
 
 router.patch('/update/profile/:userId', async (req, res) => {
     const userId = req.params.userId;
-    console.log(req.body);
+    const photoString = req.body.imageUrl;
     const user = await userService.getUserById(userId);
-    // const updatedUser = await userService.updateUserProfile(userId, { ...user, imageUrl: photoString })
+    const updatedUser = await userService.updateUserProfile(userId, { ...user, imageUrl: photoString });
+    res.json({ imageUrl: updatedUser.imageUrl });
 });
 
 module.exports = router;
