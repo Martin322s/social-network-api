@@ -96,8 +96,11 @@ router.patch('/password/:userId', async (req, res) => {
     res.status(200).json({ message: 'Password changes successfully!'});
 });
 
-router.post('/update/profile/"userId', (req, res) => {
+router.patch('/update/profile/:userId', async (req, res) => {
     const userId = req.params.userId;
+    console.log(req.body);
+    const user = await userService.getUserById(userId);
+    // const updatedUser = await userService.updateUserProfile(userId, { ...user, imageUrl: photoString })
 });
 
 module.exports = router;
