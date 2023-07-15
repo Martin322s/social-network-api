@@ -16,7 +16,7 @@ router.post('/create', async (req, res) => {
     res.json(newPublicaion);
 });
 
-router.get('/publications/all', async (req, res) => {
+router.get('/all', async (req, res) => {
     const allPosts = await postService.getAll();
     res.json(allPosts);
 });
