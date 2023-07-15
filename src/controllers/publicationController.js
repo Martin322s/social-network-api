@@ -1,6 +1,7 @@
 const router = require('express').Router();
+const postService = require('../services/publicationService');
 
-router.post('/create', (req, res) => {
+router.post('/create', async (req, res) => {
     const { opinion, file, userId } = req.body;
     const databaseData = {
         content: opinion,
@@ -10,7 +11,9 @@ router.post('/create', (req, res) => {
         author: userId,
         comments: []
     };
-    console.log(databaseData);
+    
+    const newPublicaion = await postService.createPublication(databaseData);
+    res.json(newPublicaion);
 });
 
 module.exports = router;
